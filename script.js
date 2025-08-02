@@ -199,11 +199,11 @@ chatForm.addEventListener("submit", async (e) => {
   chatWindow.scrollTop = chatWindow.scrollHeight;
 
   try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    const res = await fetch("https://jolly-haze-13f5.c-rice3118.workers.dev/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+        //Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
@@ -552,7 +552,7 @@ loadSelectedProductsFromStorage();
 //   });
 // }
 
-// /* Visually highlight selected cards */
+// /* Highlight selected product cards */
 // function highlightSelectedCards() {
 //   const productCards = document.querySelectorAll(".product-card");
 //   productCards.forEach((card) => {
@@ -807,11 +807,10 @@ loadSelectedProductsFromStorage();
 //     )
 //     .join("");
 
-//   // Remove button click
 //   const removeButtons = document.querySelectorAll(".remove-btn");
 //   removeButtons.forEach((button) => {
 //     button.addEventListener("click", (e) => {
-//       e.stopPropagation(); // Prevent card click
+//       e.stopPropagation();
 //       const productId = parseInt(button.parentElement.getAttribute("data-id"));
 //       selectedProducts = selectedProducts.filter((p) => p.id !== productId);
 //       updateSelectedProductsUI();
@@ -820,7 +819,7 @@ loadSelectedProductsFromStorage();
 //   });
 // }
 
-// /* Visually highlight selected cards */
+// /* Highlight selected product cards */
 // function highlightSelectedCards() {
 //   const productCards = document.querySelectorAll(".product-card");
 //   productCards.forEach((card) => {
@@ -922,18 +921,20 @@ loadSelectedProductsFromStorage();
 //   selectedProductsList.innerHTML = selectedProducts
 //     .map(
 //       (product) => `
-//       <div class="selected-item" data-id="${product.id}" title="Click to remove">
+//       <div class="selected-item" data-id="${product.id}">
 //         <img src="${product.image}" alt="${product.name}">
+//         <span class="remove-btn" title="Remove">×</span>
 //       </div>
 //     `
 //     )
 //     .join("");
 
-//   // Click to remove item from selected list
-//   const thumbnails = document.querySelectorAll(".selected-item");
-//   thumbnails.forEach((thumb) => {
-//     thumb.addEventListener("click", () => {
-//       const productId = parseInt(thumb.getAttribute("data-id"));
+//   // Remove button click
+//   const removeButtons = document.querySelectorAll(".remove-btn");
+//   removeButtons.forEach((button) => {
+//     button.addEventListener("click", (e) => {
+//       e.stopPropagation(); // Prevent card click
+//       const productId = parseInt(button.parentElement.getAttribute("data-id"));
 //       selectedProducts = selectedProducts.filter((p) => p.id !== productId);
 //       updateSelectedProductsUI();
 //       highlightSelectedCards();
@@ -947,11 +948,7 @@ loadSelectedProductsFromStorage();
 //   productCards.forEach((card) => {
 //     const productId = parseInt(card.getAttribute("data-id"));
 //     const isSelected = selectedProducts.some((p) => p.id === productId);
-//     if (isSelected) {
-//       card.classList.add("selected");
-//     } else {
-//       card.classList.remove("selected");
-//     }
+//     card.classList.toggle("selected", isSelected);
 //   });
 // }
 
@@ -1145,7 +1142,7 @@ loadSelectedProductsFromStorage();
 //     )
 //     .join("");
 
-//   // Add click event to each product card
+//   // Add click event to each product card for selection
 //   const cards = document.querySelectorAll(".product-card");
 //   cards.forEach((card) => {
 //     card.addEventListener("click", () => {
