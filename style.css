@@ -1,11 +1,273 @@
-/* —— basic reset —— */
+/* Global Styles */
+body {
+  font-family: "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f8f8f8;
+  color: #333;
+}
+
+/* Header */
+header {
+  background-color: #ff003b; /* L'Oréal red */
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+
+/* Layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 30px;
+}
+
+/* Category Filter */
+#categoryFilter {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #e3a535; /* L'Oréal gold */
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  width: 250px;
+}
+
+/* Products Grid */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Product Card */
+.product-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, border 0.2s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: scale(1.02);
+}
+
+.product-card.selected {
+  border: 3px solid #e3a535; /* Highlight border */
+}
+
+/* Product Image */
+.product-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Product Info */
+.product-info {
+  padding: 10px 12px;
+}
+
+.product-info h3 {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.product-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Product Description Overlay */
+.product-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 0, 59, 0.88); /* L'Oréal red overlay */
+  color: #fff;
+  opacity: 0;
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: opacity 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  border-radius: 4px;
+}
+
+.product-card:hover .product-overlay {
+  opacity: 1;
+}
+
+/* Selected Products Section */
+.selected-products {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 5px solid #ff003b;
+}
+
+.selected-products h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #ff003b;
+}
+
+.selected-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.selected-item {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #e3a535;
+  transition: transform 0.2s;
+}
+
+.selected-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.selected-item:hover {
+  transform: scale(1.05);
+}
+
+/* Placeholder Message */
+.placeholder-message {
+  text-align: center;
+  color: #aaa;
+  padding: 40px 20px;
+  font-size: 18px;
+}
+
+/* Chatbot Styles (can be extended) */
+.chat-area {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  border-top: 5px solid #e3a535;
+}
+
+#chatWindow {
+  background: #f4f4f4;
+  height: 150px;
+  overflow-y: auto;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #444;
+}
+
+#chatForm input {
+  padding: 10px;
+  width: 70%;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#chatForm button {
+  padding: 10px 15px;
+  background: #e3a535;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+#chatForm button:hover {
+  background: #c7902d;
+}
+
+/* Button for generating routine */
+#generateRoutine {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #ff003b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+#generateRoutine:hover {
+  background-color: #cc0033;
+}
+
+/* Remove button on selected items */
+.selected-item {
+  position: relative;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #ff003b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.remove-btn:hover {
+  background: #cc0033;
+}
+
+.clear-btn {
+  margin-top: 0.5em;
+  padding: 0.5em 1em;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.clear-btn:hover {
+  background-color: #bbb;
+}
+
+/* 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* —— body + fonts —— */
+
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
   color: #333;
@@ -18,7 +280,7 @@ body {
   max-width: 900px;
 }
 
-/* header */
+
 .site-header {
   text-align: center;
   padding-top: 50px;
@@ -36,7 +298,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* category filter */
+
 .search-section {
   margin: 30px 0;
   display: flex;
@@ -58,7 +320,7 @@ body {
   border-color: #666;
 }
 
-/* chat section */
+
 .chatbox {
   margin: 40px 0;
   border: 2px solid #000;
@@ -81,7 +343,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* placeholder message */
+
 .placeholder-message {
   width: 100%;
   text-align: center;
@@ -90,7 +352,7 @@ body {
   font-size: 18px;
 }
 
-/* input row */
+
 .chat-form {
   display: flex;
   gap: 12px;
@@ -135,7 +397,7 @@ body {
   outline-offset: 2px;
 }
 
-/* visually hidden */
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -148,7 +410,6 @@ body {
   border: 0;
 }
 
-/* footer */
 .site-footer {
   margin: 60px 0 40px;
   text-align: center;
@@ -170,7 +431,7 @@ body {
   color: #666666;
 }
 
-/* products grid */
+
 .products-grid {
   display: flex;
   flex-wrap: wrap;
@@ -186,6 +447,8 @@ body {
   display: flex;
   gap: 15px;
   min-height: 160px;
+  cursor: pointer;
+  transition: border 0.2s ease;
 }
 
 .product-card img {
@@ -213,7 +476,7 @@ body {
   color: #666;
 }
 
-/* selected products */
+
 .selected-products {
   margin: 40px 0;
   padding: 20px;
@@ -253,3 +516,61 @@ body {
 .generate-btn i {
   margin-right: 8px;
 }
+
+
+.product-card.selected {
+  border: 2px solid #e3a535;
+  background-color: #fffdf5;
+  box-shadow: 0 0 10px rgba(227, 165, 53, 0.3);
+  transition: border 0.2s ease, background-color 0.2s ease;
+}
+
+.selected-item {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.selected-item:hover {
+  transform: scale(1.05);
+  border: 2px solid #ff003b;
+}
+
+.selected-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.selected-item::after {
+  content: "×";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff003b;
+  color: #fff;
+  font-size: 14px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+
+.product-description {
+  font-size: 14px;
+  color: #444;
+  margin-top: 10px;
+  display: none;
+  line-height: 1.4;
+  transition: max-height 0.3s ease;
+}
+
+.product-description.visible {
+  display: block;
+} */
