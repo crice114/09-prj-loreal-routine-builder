@@ -21,7 +21,9 @@ productsContainer.innerHTML = `<div class="placeholder-message">Select a categor
 
 /* Display filtered product cards */
 function displayProducts(products) {
-  productsContainer.innerHTML = products.map(product => `
+  productsContainer.innerHTML = products
+    .map(
+      (product) => `
     <div class="product-card" data-id="${product.id}">
       <img src="${product.image}" alt="${product.name}">
       <div class="product-info">
@@ -30,13 +32,15 @@ function displayProducts(products) {
       </div>
       <div class="product-overlay"><p>${product.description}</p></div>
     </div>
-  `).join("");
+  `
+    )
+    .join("");
 
-  document.querySelectorAll(".product-card").forEach(card => {
+  document.querySelectorAll(".product-card").forEach((card) => {
     card.addEventListener("click", () => {
       const id = parseInt(card.getAttribute("data-id"));
-      loadProducts().then(products => {
-        const selected = products.find(p => p.id === id);
+      loadProducts().then((products) => {
+        const selected = products.find((p) => p.id === id);
         toggleProductSelection(selected);
       });
     });
@@ -47,7 +51,7 @@ function displayProducts(products) {
 
 /* Toggle selection */
 function toggleProductSelection(product) {
-  const index = selectedProducts.findIndex(p => p.id === product.id);
+  const index = selectedProducts.findIndex((p) => p.id === product.id);
   if (index === -1) selectedProducts.push(product);
   else selectedProducts.splice(index, 1);
   updateSelectedProductsUI();
@@ -57,18 +61,22 @@ function toggleProductSelection(product) {
 
 /* Update UI */
 function updateSelectedProductsUI() {
-  selectedProductsList.innerHTML = selectedProducts.map(product => `
+  selectedProductsList.innerHTML = selectedProducts
+    .map(
+      (product) => `
     <div class="selected-item" data-id="${product.id}">
       <img src="${product.image}" alt="${product.name}">
       <span class="remove-btn" title="Remove">×</span>
     </div>
-  `).join("");
+  `
+    )
+    .join("");
 
-  document.querySelectorAll(".remove-btn").forEach(btn => {
+  document.querySelectorAll(".remove-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const id = parseInt(btn.parentElement.getAttribute("data-id"));
-      selectedProducts = selectedProducts.filter(p => p.id !== id);
+      selectedProducts = selectedProducts.filter((p) => p.id !== id);
       updateSelectedProductsUI();
       highlightSelectedCards();
       saveSelectedProducts();
@@ -78,9 +86,12 @@ function updateSelectedProductsUI() {
 
 /* Highlight selected product cards */
 function highlightSelectedCards() {
-  document.querySelectorAll(".product-card").forEach(card => {
+  document.querySelectorAll(".product-card").forEach((card) => {
     const id = parseInt(card.getAttribute("data-id"));
-    card.classList.toggle("selected", selectedProducts.some(p => p.id === id));
+    card.classList.toggle(
+      "selected",
+      selectedProducts.some((p) => p.id === id)
+    );
   });
 }
 
@@ -112,7 +123,7 @@ if (clearSelectionsBtn) {
 /* Filter by category */
 categoryFilter.addEventListener("change", async (e) => {
   const products = await loadProducts();
-  const filtered = products.filter(p => p.category === e.target.value);
+  const filtered = products.filter((p) => p.category === e.target.value);
   displayProducts(filtered);
 });
 
@@ -123,22 +134,32 @@ generateRoutineBtn.addEventListener("click", async () => {
     return;
   }
 
-  const prompt = `I have selected the following skincare products from L’Oréal:\n${selectedProducts.map((p, i) =>
-    `${i + 1}. ${p.name} by ${p.brand} - ${p.category}\nDescription: ${p.description}`
-  ).join("\n")}\n\nCan you create a personalized skincare routine using these products?\nPlease explain when and how to use each one.`;
+  const prompt = `I have selected the following skincare products from L’Oréal:\n${selectedProducts
+    .map(
+      (p, i) =>
+        `${i + 1}. ${p.name} by ${p.brand} - ${p.category}\nDescription: ${
+          p.description
+        }`
+    )
+    .join(
+      "\n"
+    )}\n\nCan you create a personalized skincare routine using these products?\nPlease explain when and how to use each one.`;
 
   chatHistory = [{ role: "user", content: prompt }];
 
-  chatWindow.innerHTML += `<div class="chat-message user"><strong>You:</strong> ${prompt.replace(/\n/g, "<br>")}</div>`;
+  chatWindow.innerHTML += `<div class="chat-message user"><strong>You:</strong> ${prompt.replace(
+    /\n/g,
+    "<br>"
+  )}</div>`;
   chatWindow.innerHTML += `<div class="chat-message bot loading"><strong>AI:</strong> Thinking...</div>`;
   chatWindow.scrollTop = chatWindow.scrollHeight;
 
   try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    const res = await fetch("https://jolly-haze-13f5.c-rice3118.workers.dev/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+        //Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
@@ -152,7 +173,10 @@ generateRoutineBtn.addEventListener("click", async () => {
     chatHistory.push({ role: "assistant", content: reply });
 
     document.querySelector(".chat-message.bot.loading").remove();
-    chatWindow.innerHTML += `<div class="chat-message bot"><strong>AI:</strong> ${reply.replace(/\n/g, "<br>")}</div>`;
+    chatWindow.innerHTML += `<div class="chat-message bot"><strong>AI:</strong> ${reply.replace(
+      /\n/g,
+      "<br>"
+    )}</div>`;
     chatWindow.scrollTop = chatWindow.scrollHeight;
   } catch (err) {
     document.querySelector(".chat-message.bot.loading").remove();
@@ -193,7 +217,10 @@ chatForm.addEventListener("submit", async (e) => {
     chatHistory.push({ role: "assistant", content: reply });
 
     document.querySelector(".chat-message.bot.loading").remove();
-    chatWindow.innerHTML += `<div class="chat-message bot"><strong>AI:</strong> ${reply.replace(/\n/g, "<br>")}</div>`;
+    chatWindow.innerHTML += `<div class="chat-message bot"><strong>AI:</strong> ${reply.replace(
+      /\n/g,
+      "<br>"
+    )}</div>`;
     chatWindow.scrollTop = chatWindow.scrollHeight;
   } catch (err) {
     document.querySelector(".chat-message.bot.loading").remove();
@@ -204,28 +231,6 @@ chatForm.addEventListener("submit", async (e) => {
 
 /* Initial load */
 loadSelectedProductsFromStorage();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //LATEST VERSION OF THE CODE///////
 
